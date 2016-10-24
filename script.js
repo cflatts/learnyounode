@@ -1,12 +1,13 @@
 var fs = require('fs')
+var path = require('path')
 
-//EXERCISE 1 'HELLO WORLD'
+//EXERCISE 1 'HELLO WORLD' (Print out 'hello world' to the console)
 var hello = function() {
     return console.log('HELLO WORLD')
 }
 // hello()
 
-//EXERCISE 2 'BABY STEPS'
+//EXERCISE 2 'BABY STEPS' (adds all the numbers in an array and returns the sum)
 var add = function() {
     //process.argv is a global variable
     var cmdArr = process.argv
@@ -21,7 +22,7 @@ var add = function() {
 }
 // add()
 
-// EXERCISE 3 'FIRST I/O'
+// EXERCISE 3 'FIRST I/O' (syncronously reads a file and returns the number of new lines in that file)
 var countNewLinesSync = function() {
     var testFile = process.argv[2]
     //readFileSync is a file system method that reads the data in the file given to it, the method returns a buffer
@@ -36,8 +37,7 @@ var countNewLinesSync = function() {
 }
 // countNewLinesSync()
 
-// EXERCISE 4 'FIRST ASYNC I/O'
-
+// EXERCISE 4 'FIRST ASYNC I/O' (asyncronously reads a file and returns the number of new lines in that file)
 var countNewLinesAsync = function() {
     var testFile = process.argv[2]
     //the async method takes in two methods, the data and a callback (the 'utf8' argument is optional and returns the data as a string instead of a buffer object)
@@ -54,4 +54,29 @@ var countNewLinesAsync = function() {
         }
     })
 }
-countNewLinesAsync()
+// countNewLinesAsync()
+
+// EXERCISE 5 FILTERED LS
+
+var listFiles = function() {
+    var testPath = process.argv[2]
+    var testExt = process.argv[3]
+
+    fs.readdir(testPath, function(error, files) {
+        if(error) {
+            return console.log(error)
+        }
+        else {
+            var matchPathArray = []
+            for(var i = 0; i < files.length; i++) {
+                var extension = path.extname(files[i])
+                if('.'+testExt === extension) {
+                    console.log(files[i])
+                }
+            }
+        }
+
+    })
+}
+listFiles()
+
